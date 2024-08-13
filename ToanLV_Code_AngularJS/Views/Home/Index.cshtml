@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Your Entities";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<div ng-app="myApp" ng-controller="ProductController">
+    <h2 style="color:cadetblue"><strong>Danh sách sản phẩm của hệ thống</strong> </h2>
+    <!-- Nút thêm mới -->
+    <button style="background-color: green; color: white; margin-bottom: 20px; width:150px ; height:40px; border-radius:25px" ng-click="showAddForm = !showAddForm">
+        {{ showAddForm ? 'Hủy thêm' : 'Thêm mới' }}
+    </button>
+    <table class="table" style="margin-bottom:110px">
+        <thead>
+            <tr>
+                <th>Mã sản phẩm</th>
+                <th>Tên</th>
+                <th>Giá bán</th>
+                <th>Mô tả</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="entity in entities">
+                <td>{{ entity.id }}</td>
+                <td>{{ entity.name }}</td>
+                <td>{{ entity.price }}</td>
+                <td>{{ entity.description }}</td>
+                <td>
+                    <button  style="background-color : orange ; color: white" ng-click="getInforUpdate(entity.id)">Sửa</button>
+                    <button style="background-color : darkred ; color: white" ng-click="deleteEntity(entity.id)">Xóa</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Form thêm mới -->
+    <div ng-show="showAddForm">
+        <h3>Thêm mới sản phẩm</h3>
+        <form ng-submit="createEntity()">
+            <div class="form-group">
+                <label for="name"><strong>Tên</strong></label>
+                <input type="text" id="name" ng-model="newEntity.name" class="form-control" required />
+                <h1 style="margin:20px"></h1>
+                <label for="price"><strong>Giá bán</strong></label>
+                <input type="number" id="price" ng-model="newEntity.price" class="form-control" required />
+                <h1 style="margin:20px"></h1>
+                <label for="description"><strong>Mô tả</strong></label>
+                <input type="text" id="description" ng-model="newEntity.description" class="form-control" required />
+            </div>
+            <button style="margin-top:50px" type="submit" class="btn btn-primary">Thêm mới</button>
+        </form>
+    </div>
+    <!-- Form Edit -->
+    <div ng-show="formedit===true">
+        <h3>Chỉnh sửa sản phẩm</h3>
+        <form ng-submit="updateEntity()">
+            <div class="form-group">
+                <label for="name"><strong>Tên</strong></label>
+                <input type="text" id="name" ng-model="entitiesEdit.name" class="form-control" required />
+                <h1 style="margin:20px"></h1>
+                <label for="price"><strong>Giá bán</strong></label>
+                <input type="number" id="price" ng-model="entitiesEdit.price" class="form-control" required />
+                <h1 style="margin:20px"></h1>
+                <label for="description"><strong>Mô tả</strong></label>
+                <input type="text" id="description" ng-model="entitiesEdit.description" class="form-control" required />
+            </div>
+            <button style="margin-top:50px ; background-color:forestgreen" type="submit" class="btn btn-primary" >Lưu thông tin</button>
+            <button style="margin-top:50px ; background-color:indianred" class="btn btn-danger" ng-click="closeFormEdit()">Hủy sửa</button>
+        </form>
+    </div>
+</div>
+
+@* / Nhúng angular js/ *@
+<script src="~/scripts/angular.min.js"></script>
+<script src="~/scripts/app.js"></script>
+<script src="~/scripts/controller/crudcontroller.js"></script>
+<script src="~/scripts/services/crudservice.js"></script>
+@* // *@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
